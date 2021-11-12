@@ -54,8 +54,8 @@ palancas$minimo6  <- FALSE
 palancas$maximo3  <- FALSE  #maximo de los ultimos 3 meses
 palancas$maximo6  <- FALSE
 
-palancas$ratiomax3   <- TRUE   #La idea de Daiana Sparta
-palancas$ratiomean6  <- TRUE   #Un derivado de la idea de Daiana Sparta
+palancas$ratiomax3   <- FALSE   #La idea de Daiana Sparta
+palancas$ratiomean6  <- FALSE   #Un derivado de la idea de Daiana Sparta
 
 palancas$tendencia6  <- FALSE    #Great power comes with great responsability
 
