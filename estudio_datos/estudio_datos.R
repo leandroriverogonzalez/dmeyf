@@ -50,7 +50,7 @@ dataset_wfb2 <- dataset[dataset$clase_ternaria=='BAJA+2']
 
 q = c(.25, .5, .75)
 
-variables_estudio <- colnames(dataset_wfb2)[2:length(colnames(dataset_wfb2))-1]
+variables_estudio <- colnames(dataset)[2:length(colnames(dataset))-1]
 
 for(variable_ahora in variables_estudio){
   tryCatch({
@@ -72,6 +72,114 @@ for(variable_ahora in variables_estudio){
   }
   }, error=function(e){print(variable_ahora)})
 }
+
+dataset_wfcont <- dataset[dataset$clase_ternaria=='CONTINUA']
+
+for(variable_ahora in variables_estudio){
+  tryCatch({
+    evaluo <- dataset_wfcont %>%
+      group_by(foto_mes) %>%
+      summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+    if(sd(evaluo$quant25)==0 & sd(evaluo$quant75)==0){
+      ggplot(data = dataset_wfcont, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora)))) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Continua/",variable_ahora,"_histogram_per_month.pdf"))
+    }else{
+      ggplot(data = dataset_wfcont, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora))))+geom_boxplot(outlier.shape=NA)+ ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Continua/",variable_ahora,"_histogram_per_month.pdf"))
+    }
+  }, error=function(e){print(variable_ahora)})
+}
+
+dataset_final <- dataset[dataset$foto_mes>202011]
+
+for(variable_ahora in variables_estudio){
+  tryCatch({
+    evaluo <- dataset_final %>%
+      group_by(foto_mes) %>%
+      summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+    if(sd(evaluo$quant25)==0 & sd(evaluo$quant75)==0){
+      ggplot(data = dataset_final, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora)))) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Ultimosmeses/",variable_ahora,"_histogram_per_month.pdf"))
+    }else{
+      ggplot(data = dataset_final, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora))))+geom_boxplot(outlier.shape=NA)+ ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Ultimosmeses/",variable_ahora,"_histogram_per_month.pdf"))
+    }
+  }, error=function(e){print(variable_ahora)})
+}
+library(plyr)
+
+
+dataset_wfb2 <- dataset[dataset$clase_ternaria=='BAJA+2']
+dataset_wfb2_v2 <- rbind(dataset_wfb2, dataset_final)
+
+
+for(variable_ahora in variables_estudio){
+  tryCatch({
+    evaluo <- dataset_wfb2_v2 %>%
+      group_by(foto_mes) %>% 
+      summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]), na.rm = TRUE)
+    if(sd(evaluo$quant25)==0 & sd(evaluo$quant75)==0){
+      ggplot(data = dataset_wfb2_v2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora)))) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Bajamas2conultimosmeses/",variable_ahora,"_histogram_per_month.pdf"))
+    }else{
+      ggplot(data = dataset_wfb2_v2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora))))+geom_boxplot(outlier.shape=NA)+ ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Bajamas2conultimosmeses/",variable_ahora,"_histogram_per_month.pdf"))
+    }
+  }, error=function(e){print(variable_ahora)})
+}
+
+dataset_wfcont_v2 <- rbind(dataset_wfcont, dataset_final)
+
+for(variable_ahora in variables_estudio){
+  tryCatch({
+    evaluo <- dataset_wfcont_v2 %>%
+      group_by(foto_mes) %>%
+      summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+    if(sd(evaluo$quant25)==0 & sd(evaluo$quant75)==0){
+      ggplot(data = dataset_wfcont_v2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora)))) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Bajamas2conultimosmeses/",variable_ahora,"_histogram_per_month.pdf"))
+    }else{
+      ggplot(data = dataset_wfcont_v2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora))))+geom_boxplot(outlier.shape=NA)+ ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+      ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Bajamas2conultimosmeses/",variable_ahora,"_histogram_per_month.pdf"))
+    }
+  }, error=function(e){print(variable_ahora)})
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ggplot(data = dataset_wfb2, aes(x=as.factor(foto_mes),y=mcaja_ahorro))+geom_boxplot(outlier.shape=NA)+ ylim(0, 10) +
