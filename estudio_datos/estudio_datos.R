@@ -46,9 +46,7 @@ dataset_wf <- dataset[dataset$foto_mes<202012]
 ggplot(dataset_wf[dataset_wf$clase_ternaria=='BAJA+2'], aes(x = ctrx_quarter, group = as.factor(foto_mes))) + 
   geom_histogram(bins = 10)
 
-dataset_wfb2 <- dataset_wf[dataset_wf$clase_ternaria=='BAJA+2']
-
-boxplot(ctrx_quarter~foto_mes, data=dataset_wf)
+dataset_wfb2 <- dataset[dataset$clase_ternaria=='BAJA+2']
 
 q = c(.25, .5, .75)
 
@@ -61,12 +59,18 @@ for(variable_ahora in variables_estudio){
     summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
               quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
               quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
-  
-  ggplot(data = dataset_wfb2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora))))+geom_boxplot(outlier.shape=NA)+ ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
-    scale_x_discrete(guide = guide_axis(angle = 90)) +
-  labs(x = "Fecha", y = paste(variable_ahora))
-  ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/",variable_ahora,"_histogram_per_month.pdf"))
-  }, error=function(e){})
+  if(sd(evaluo$quant25)==0 & sd(evaluo$quant75)==0){
+    ggplot(data = dataset_wfb2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora)))) +
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
+    labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/",variable_ahora,"_histogram_per_month.pdf"))
+  }else{
+    ggplot(data = dataset_wfb2, aes(x=as.factor(foto_mes),y=eval(as.symbol(variable_ahora))))+geom_boxplot(outlier.shape=NA)+ ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
+      labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/",variable_ahora,"_histogram_per_month.pdf"))
+  }
+  }, error=function(e){print(variable_ahora)})
 }
 
 
