@@ -1,0 +1,232 @@
+active_quarter                  -- no sirve
+catm_trx                        no sirven 4, 5 y 6 2020
+catm_trx_other                  no sirve
+ccaja_ahorro                    no sirve
+ccajas_consultas                no sirve
+ccajas_depositos                no sirve
+ccajas_seguridad                no sirve
+ccajas_extracciones             no sirve
+ccajas_otras                    no sirve
+ccajas_transacciones            sirve a partir del 202003
+ccajas_descuentos               no sirve
+ccallcenter_transacciones       no sirve
+ccheques_depositados            no sirve
+ccheques_depositados_rechazados no sirve
+ccheques_emitidos               no sirve
+ccheques_emitidos_rechazados    no sirve
+ccomisiones_mantenimiento       sirve todo
+ccomisiones_otras               sirven 7, 8, 9, 10 y 11 del 2020
+ccuenta_corriente               no sirve
+ccuenta_debitos_automaticos     sirve todo
+cextraccion_autoservicio        sirve a partir del 7 al 11 inclusive 2020
+cforex_buy                      no sirve
+cforex                          no sirve
+csell                           no sirve
+chomebanking_transacciones      sirve del 7 al 11 inclusive
+cinversion1                     no sirve
+cinversion2                     no sirve
+cliente_antiguedad              sirve todo
+cliente_edad                    sirve todo
+cliente_vip                     no sirve
+cpagodeservicios                no sirve
+cpagomiscuentas                 sirve todo
+cpayroll2_trx                   no sirve
+cpayroll_trx                    sirve
+cplazo_fijo                     no sirve
+cprestamos_hipotecarios         no sirve
+cprestamos_personales           no sirve
+cprestamos_prendarios           no sirve
+cproductos                      sirve
+cseguro_accidentes_personales   no sirve
+cseguro_auto                    no sirve
+cseguro_vida                    no sirve
+cseguro_vivienda                no sirve
+ctarjeta_debito                 sirve del 3 al 11 inclusive 2020
+ctarjeta_debito_transacciones   sirve del 7 al 11 inclusive 2020
+ctarjeta_tarjeta_master_automaticos no sirve
+ctarjeta_master_descuentos      no sirve
+ctarjeta_master                 no sirve
+ctarjeta_master_transacciones   no sirve
+ctarjeta_visa_debitos_automaticos no sirve
+ctarjeta_visa                   no sirve
+ctarjeta_visa_transacciones     del 7 al 11 sirve del 2020
+ctransferencias_emitidas        sirve
+ctransferencias_recibidas       sirve
+ctrx_quarter                    sirve del 7 al 11 del 2020
+internet                        nose
+mactivos_margen                 sirve del 7 al 11 del 2020
+matm                            no sirve
+matm_other                      no sirve
+mautoservicio                   sirve del 7 al 11 del 2020
+mcaja_ahorro_adicional          no sirve
+mcaja_ahorro_dolares            nose
+mcaja_ahorro                    sirve del 7 al 11 del 2020
+mcajeros_propios_descuentos     no sirve
+mcheques_depositados            no sirve
+mcheques_depositados_depositados   no sirve
+mcheques_emitidos                no sirve
+mcheques_emitidos_rechazados    no sirve
+mcomisiones                     sirve del 7 al 11 del 2020
+mcomisiones_mantenimiento       no sirve
+mcomisiones_otras               sirve del 7 al 11 del 2020
+mcuentacorriente_adicional      no sirve
+mcuenta_corriente               sirve del 3 al 11 del 2020
+mcuenta_debitos_automaticos     sirve del 5 al 11 del 2020
+mcuentas_saldos                 sirve del 7 al 11 del 2020
+mdescubierto_preacordado        no sirve
+mextraccion_autoservicio        sirve del 8 al 11 de 2020
+mforex_buy                      no sirve
+mforex_sell                     sirve del 5 al 11 del 2020
+minversion1_dolares             no sirve
+minversion1_pesos               no sirve
+minversion2                     no sirve
+mpagodeservicios                no sirve
+mpagomiscuentas                 sirve del 6 al 11 de 2020
+mpasivos_margen                 sirve del 7 al 11 del 2020
+mpayroll2                       no sirve
+mpayroll                        sirve del 7 al 11 del 2020
+mplazo_fijo_dolares             no sirve
+mplazo_fijo_pesos               no sirve
+mprestamos_personales           no sirve
+mprestamos_prendarios           no sirve
+mrentabilidad_annual            sirve del 7 al 11 de 2020
+mrentabilidad                   sirve del 7 al 11 del 2020
+mtarjeta_master_consumo         no sirve
+mtarjeta_visa_consumo           sirve del 9 al 11 del 2020
+mtransferencias_emitidas        no sirve - ver
+mtransferencias_recibidas       sirve del 7 al 11 del 2020
+mttarjeta_master_debitos_automaticos no sirve
+mttarjeta_visa_debitos_automaticos  no sirve - ver
+numero_de_cliente               no sirve
+tcallcenter                     no sirve
+tcuentas                        no sirve
+thomebanking                    sirve del 7 al 11 del 2020
+tpaquete1                       no sirve
+tpaquete2                       no sirve
+tpaquete3                       no sirve
+tpaquete4                       no sirve
+
+
+
+
+
+
+active_quarter                  no sirve - seguro
+catm_trx                        no sirven sirven 7 en adelante 2020
+catm_trx_other                  sirven del 7 en adelante, solo no sirve el 6 del 2020
+ccaja_ahorro                    sirve todo
+ccaja_seguridad                 sirve del 5 en adelante del 2020
+ccajas_consultas                no sirve el 6 del 2020
+ccajas_depositos                sirve del 7 al 11 del 2020
+ccajas_extracciones             no sirve
+ccajas_otras                    no sirve
+ccajas_transacciones            sirve a partir del 202003
+ccajas_descuentos               no sirve
+ccallcenter_transacciones       no sirve
+ccheques_depositados            no sirve
+ccheques_depositados_rechazados no sirve
+ccheques_emitidos               no sirve
+ccheques_emitidos_rechazados    no sirve
+ccomisiones_mantenimiento       sirve todo
+ccomisiones_otras               sirven 7, 8, 9, 10 y 11 del 2020
+ccuenta_corriente               no sirve
+ccuenta_debitos_automaticos     sirve todo
+cextraccion_autoservicio        sirve a partir del 7 al 11 inclusive 2020
+cforex_buy                      no sirve
+cforex                          no sirve
+csell                           no sirve
+chomebanking_transacciones      sirve del 7 al 11 inclusive
+cinversion1                     no sirve
+cinversion2                     no sirve
+cliente_antiguedad              sirve todo
+cliente_edad                    sirve todo
+cliente_vip                     no sirve
+cpagodeservicios                no sirve
+cpagomiscuentas                 sirve todo
+cpayroll2_trx                   no sirve
+cpayroll_trx                    sirve
+cplazo_fijo                     no sirve
+cprestamos_hipotecarios         no sirve
+cprestamos_personales           no sirve
+cprestamos_prendarios           no sirve
+cproductos                      sirve
+cseguro_accidentes_personales   no sirve
+cseguro_auto                    no sirve
+cseguro_vida                    no sirve
+cseguro_vivienda                no sirve
+ctarjeta_debito                 sirve del 3 al 11 inclusive 2020
+ctarjeta_debito_transacciones   sirve del 7 al 11 inclusive 2020
+ctarjeta_tarjeta_master_automaticos no sirve
+ctarjeta_master_descuentos      no sirve
+ctarjeta_master                 no sirve
+ctarjeta_master_transacciones   no sirve
+ctarjeta_visa_debitos_automaticos no sirve
+ctarjeta_visa                   no sirve
+ctarjeta_visa_transacciones     del 7 al 11 sirve del 2020
+ctransferencias_emitidas        sirve
+ctransferencias_recibidas       sirve
+ctrx_quarter                    sirve del 7 al 11 del 2020
+internet                        nose
+mactivos_margen                 sirve del 7 al 11 del 2020
+matm                            no sirve
+matm_other                      no sirve
+mautoservicio                   sirve del 7 al 11 del 2020
+mcaja_ahorro_adicional          no sirve
+mcaja_ahorro_dolares            nose
+mcaja_ahorro                    sirve del 7 al 11 del 2020
+mcajeros_propios_descuentos     no sirve
+mcheques_depositados            no sirve
+mcheques_depositados_depositados   no sirve
+mcheques_emitidos                no sirve
+mcheques_emitidos_rechazados    no sirve
+mcomisiones                     sirve del 7 al 11 del 2020
+mcomisiones_mantenimiento       no sirve
+mcomisiones_otras               sirve del 7 al 11 del 2020
+mcuentacorriente_adicional      no sirve
+mcuenta_corriente               sirve del 3 al 11 del 2020
+mcuenta_debitos_automaticos     sirve del 5 al 11 del 2020
+mcuentas_saldos                 sirve del 7 al 11 del 2020
+mdescubierto_preacordado        no sirve
+mextraccion_autoservicio        sirve del 8 al 11 de 2020
+mforex_buy                      no sirve
+mforex_sell                     sirve del 5 al 11 del 2020
+minversion1_dolares             no sirve
+minversion1_pesos               no sirve
+minversion2                     no sirve
+mpagodeservicios                no sirve
+mpagomiscuentas                 sirve del 6 al 11 de 2020
+mpasivos_margen                 sirve del 7 al 11 del 2020
+mpayroll2                       no sirve
+mpayroll                        sirve del 7 al 11 del 2020
+mplazo_fijo_dolares             no sirve
+mplazo_fijo_pesos               no sirve
+mprestamos_personales           no sirve
+mprestamos_prendarios           no sirve
+mrentabilidad_annual            sirve del 7 al 11 de 2020
+mrentabilidad                   sirve del 7 al 11 del 2020
+mtarjeta_master_consumo         no sirve
+mtarjeta_visa_consumo           sirve del 8 al 11 del 2020
+mtransferencias_emitidas        no sirve - ver
+mtransferencias_recibidas       sirve del 7 al 11 del 2020
+mttarjeta_master_debitos_automaticos no sirve
+mttarjeta_visa_debitos_automaticos  no sirve - ver
+numero_de_cliente               no sirve
+tcallcenter                     no sirve
+tcuentas                        no sirve
+thomebanking                    sirve del 7 al 11 del 2020
+tpaquete1                       no sirve
+tpaquete2                       no sirve
+tpaquete3                       no sirve
+tpaquete4                       no sirve
+
+
+
+
+
+
+
+
+
+
+                
+
