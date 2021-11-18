@@ -86,8 +86,9 @@ dataset_cfb2cont %>%
   ggplot(aes(x = as.factor(foto_mes), y = eval(as.symbol(variable_ahora)), fill = clase_ternaria)) + 
   geom_bar(stat = "identity", position = "dodge") + scale_x_discrete(guide = guide_axis(angle = 90)) +
   labs(x = "Fecha", y = paste(variable_ahora))
+  ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Datosconnan/",variable_ahora,"_barplot_per_month.png"))
 
-
+Sys.sleep(10)
 for(variable_ahora in variables_estudio[1:5]){
   tryCatch({
 
@@ -100,7 +101,7 @@ for(variable_ahora in variables_estudio[1:5]){
       ggplot(aes(x = as.factor(foto_mes), y = eval(as.symbol(variable_ahora)), fill = clase_ternaria)) + 
       geom_bar(stat = "identity", position = "dodge") + scale_x_discrete(guide = guide_axis(angle = 90)) +
       labs(x = "Fecha", y = paste(variable_ahora))
-    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Datosconnan/",variable_ahora,"_barplot_per_month.pdf"))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Datosconnan/",variable_ahora,"_barplot_per_month.png"))
     
   }, error=function(e){print(variable_ahora)})
 }
