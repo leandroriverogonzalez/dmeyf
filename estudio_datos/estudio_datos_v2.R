@@ -14,7 +14,6 @@ directory.root  <-  "~/buckets/b1/"  #Google Cloud
 setwd( directory.root )
 library(dplyr)
 dataset  <- fread( "./datasetsOri/paquete_premium.csv.gz")
-library(plyr)
 
 ################################################
 #Lo copado esta acá
@@ -32,6 +31,7 @@ dataset_cfb2 <- rbind(dataset_wfb2, dataset_final)
 dataset_cfb2cont <- rbind(dataset_cfb2, dataset_wfcont)
 
 dataset_cfb2cont[dataset_cfb2cont$clase_ternaria=='']$clase_ternaria = 'nosesabe'
+q = c(.25, .5, .75)
 
 ################################################
 variable_ahora <- 'ctrx_quarter'
@@ -75,14 +75,32 @@ for(variable_ahora in variables_estudio[94:length(variables_estudio)]){
 
 variables_estudio <- colnames(dataset)[2:length(colnames(dataset))-1]
 
-variable_ahora <- variables_estudio[10]
+variable_ahora <- variables_estudio[30]
 
-dim(dataset_cfb2cont[,c('foto_mes', variable_ahora, 'clase_ternaria')])
+evaluo <- dataset_cfb2cont %>%
+  group_by(foto_mes, clase_ternaria) %>%
+  summarise(na = sum(is.na(eval(as.symbol(variable_ahora)))))
 
-dataset_cfb2cont[,c('foto_mes', 'ctrx_quarter', 'clase_ternaria')] %>%
-  filter(is.na('ctrx_quarter'))  %>%
-  count(col_1)
+dataset_cfb2cont %>% 
+  mutate(x = factor(foto_mes)) %>% 
+  ggplot(aes(x = as.factor(foto_mes), y = eval(as.symbol(variable_ahora)), fill = clase_ternaria)) + 
+  geom_bar(stat = "identity", position = "dodge") + scale_x_discrete(guide = guide_axis(angle = 90)) +
+  labs(x = "Fecha", y = paste(variable_ahora))
 
-dataset_cfb2cont[,c('foto_mes', 'ctrx_quarter', 'clase_ternaria')] %>% group_by('foto_mes','clase_ternaria') %>% summarise(non_na_count = sum(is.na('ctrx_quarter')))
 
+for(variable_ahora in variables_estudio[1:5]){
+  tryCatch({
 
+    evaluo <- dataset_cfb2cont %>%
+      group_by(foto_mes, clase_ternaria) %>%
+      summarise(na = sum(is.na(eval(as.symbol(variable_ahora)))))
+      
+    dataset_cfb2cont %>% 
+      mutate(x = factor(foto_mes)) %>% 
+      ggplot(aes(x = as.factor(foto_mes), y = eval(as.symbol(variable_ahora)), fill = clase_ternaria)) + 
+      geom_bar(stat = "identity", position = "dodge") + scale_x_discrete(guide = guide_axis(angle = 90)) +
+      labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Datosconnan/",variable_ahora,"_barplot_per_month.pdf"))
+    
+  }, error=function(e){print(variable_ahora)})
+}
