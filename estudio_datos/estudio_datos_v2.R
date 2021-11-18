@@ -88,8 +88,8 @@ dataset_cfb2cont %>%
   labs(x = "Fecha", y = paste(variable_ahora))
   ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Datosconnan/",variable_ahora,"_barplot_per_month.png"))
 
-Sys.sleep(10)
-for(variable_ahora in variables_estudio[1:5]){
+
+for(variable_ahora in variables_estudio){
   tryCatch({
 
     evaluo <- dataset_cfb2cont %>%
