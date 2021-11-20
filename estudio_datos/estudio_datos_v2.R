@@ -213,3 +213,4 @@ object.size(data_comp)
 
 # Write CSV
 fwrite(data_comp, "/home/leandroriverogonzalez/dmeyf/estudio_datos/datos_comp.csv")
+
