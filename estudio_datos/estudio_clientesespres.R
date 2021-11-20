@@ -13,8 +13,10 @@ require("lightgbm")
 library(dplyr)
 library(reshape2)
 
-#dataset  <- fread( "/home/leandro/Documents/Maestria/DMEF/TP2/dmeyf/estudio_datos/datos_comp.csv.gz")
-dataset  <- fread( "/home/leandroriverogonzalez/dmeyf/estudio_datos/datos_comp.csv.gz")
+#dataset_comp  <- fread( "/home/leandro/Documents/Maestria/DMEF/TP2/dmeyf/estudio_datos/datos_comp.csv.gz")
+dataset_comp  <- fread( "/home/leandroriverogonzalez/dmeyf/estudio_datos/datos_comp.csv.gz")
+dataset  <- fread( "./datasetsOri/paquete_premium.csv.gz")
+
 `%notin%` <- Negate('%in%')
 
 elapsed_months <- function(end_date, start_date) {
@@ -25,21 +27,21 @@ elapsed_months <- function(end_date, start_date) {
 
 ##############################
 #esto proximo tarda muchisimo, nunca lo termine de correr
-n_clientes <- unique(dataset$numero_de_cliente)
-data_clienteespre <- data.frame(n_clientes, rep('corto',length(n_clientes)))
-colnames(data_clienteespre) <- c('n_cliente', 'espre')
-j <- 0
-for(cliente in n_clientes){
-  ultimo <- 202101 %in% dataset[dataset$numero_de_cliente==cliente]$foto_mes
-  primero <- 201801 %in% dataset[dataset$numero_de_cliente==cliente]$foto_mes
-  if(ultimo & primero){
-    data_clienteespre[data_clienteespre$n_cliente==cliente,]$espre = 'largo'
-  }
-  if(j%%10000==0){
-    print(paste0('van: ', j, ' - de: ', dim(data_clienteespre)[1]))
-  }
-  j <- j+1
-}
+# n_clientes <- unique(dataset_comp$numero_de_cliente)
+# data_clienteespre <- data.frame(n_clientes, rep('corto',length(n_clientes)))
+# colnames(data_clienteespre) <- c('n_cliente', 'espre')
+# j <- 0
+# for(cliente in n_clientes){
+#   ultimo <- 202101 %in% dataset_comp[dataset_comp$numero_de_cliente==cliente]$foto_mes
+#   primero <- 201801 %in% dataset_comp[dataset_comp$numero_de_cliente==cliente]$foto_mes
+#   if(ultimo & primero){
+#     data_clienteespre[data_clienteespre$n_cliente==cliente,]$espre = 'largo'
+#   }
+#   if(j%%10000==0){
+#     print(paste0('van: ', j, ' - de: ', dim(data_clienteespre)[1]))
+#   }
+#   j <- j+1
+# }
 ##############################
 
 # algo <- dcast(dataset, foto_mes ~ numero_de_cliente, value.var = "clase_ternaria")
@@ -103,4 +105,48 @@ ggplot(dataset[dataset$clase_ternaria=='BAJA+2'], aes(x=as.factor(foto_mes))) +
 ggplot(data_clienteespre, aes(x=tiempo_meses)) + 
   geom_histogram(binwidth=1)
 
+################################################
+#Lo copado esta acá
+dataset_wfb2 <- dataset[dataset$clase_ternaria=='BAJA+2']
+dataset_wfb2 <- dataset_wfb2[dataset_wfb2$foto_mes<202012]
 
+dataset_wfcont <- dataset[dataset$clase_ternaria=='CONTINUA']
+dataset_wfcont <- dataset_wfcont[dataset_wfcont$foto_mes<202012]
+
+dataset_final <- dataset[dataset$foto_mes>202011]
+dataset_final <- dataset_final[dataset_final$clase_ternaria!='BAJA+1']
+
+dataset_cfb2 <- rbind(dataset_wfb2, dataset_final)
+
+dataset_cfb2cont <- rbind(dataset_cfb2, dataset_wfcont)
+
+dataset_cfb2cont[dataset_cfb2cont$clase_ternaria=='']$clase_ternaria = 'nosesabe'
+q = c(.25, .5, .75)
+
+variables_estudio <- colnames(dataset)[2:length(colnames(dataset))-1]
+
+colnames(dataset_cfb2cont)
+
+dataset_cfb2cont[(dataset_cfb2cont$numero_de_cliente %in% clientes_espres) & (dataset_cfb2cont$clase_ternaria=='BAJA+2'),]$clase_ternaria = 'espres'
+
+variable_ahora <- 'mtarjeta_visa_consumo'
+
+
+for(variable_ahora in variables_estudio){
+  tryCatch({
+    
+    evaluo <- dataset_cfb2cont %>%
+      group_by(foto_mes) %>%
+      summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+    
+    
+    ggplot(dataset_cfb2cont, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+      geom_boxplot(outlier.shape=NA) +
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
+      labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Todossinoutliers_yespres/",variable_ahora,"_histogram_per_month.pdf"))
+
+  }, error=function(e){print(variable_ahora)})
+}

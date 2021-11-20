@@ -52,7 +52,7 @@ ggplot(dataset_cfb2cont, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ah
   labs(x = "Fecha", y = paste(variable_ahora))
 variables_estudio <- colnames(dataset)[2:length(colnames(dataset))-1]
 
-for(variable_ahora in variables_estudio[94:length(variables_estudio)]){
+for(variable_ahora in variables_estudio){
   tryCatch({
     evaluo <- dataset_cfb2cont %>%
       group_by(foto_mes) %>%
