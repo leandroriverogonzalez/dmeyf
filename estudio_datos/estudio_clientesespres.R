@@ -146,7 +146,36 @@ for(variable_ahora in variables_estudio){
       geom_boxplot(outlier.shape=NA) +
       scale_x_discrete(guide = guide_axis(angle = 90)) +
       labs(x = "Fecha", y = paste(variable_ahora))
-    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Todossinoutliers_yespres/",variable_ahora,"_histogram_per_month.pdf"))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Todossinoutliers_yespres/",variable_ahora,"_histogram_per_month.pdf"), width = 1366/72, height = 768/72, dpi = 72)
+    
+  }, error=function(e){print(variable_ahora)})
+}
 
+
+variables_co <- c("mprestamos_hipotecarios", "mtarjeta_visa_descuentos","mtarjeta_master_descuentos","tmobile_app","cmobile_app_trx",
+"Master_delinquency","Master_status","Master_mfinanciacion_limite","Master_Fvencimiento","Master_Finiciomora",
+"Master_msaldototal","Master_msaldopesos","Master_msaldodolares","Master_mconsumospesos","Master_mconsumosdolares",
+"Master_mlimitecompra","Master_madelantopesos","Master_madelantodolares","Master_fultimo_cierre","Master_mpagado",
+"Master_mpagospesos","Master_mpagosdolares","Master_fechaalta","Master_mconsumototal","Master_cconsumos",
+"Master_cadelantosefectivo","Master_mpagominimo","Visa_delinquency","Visa_status","Visa_mfinanciacion_limite",
+"Visa_Fvencimiento","Visa_Finiciomora","Visa_msaldototal","Visa_msaldopesos","Visa_msaldodolares","Visa_mconsumospesos",
+"Visa_mconsumosdolares","Visa_mlimitecompra","Visa_madelantopesos","Visa_madelantodolares","Visa_fultimo_cierre",
+"Visa_mpagado","Visa_mpagospesos","Visa_mpagosdolares","Visa_fechaalta","Visa_mconsumototal","Visa_cconsumos",
+"Visa_cadelantosefectivo","Visa_mpagominimo")
+
+ktrain_subsampling <- 0.1
+dataset_subs <- copy(dataset_cfb2cont)
+
+vector_azar  <- runif( nrow(dataset_cfb2cont) )
+dataset_subs <- dataset_subs[ !(( clase_ternaria=='CONTINUA') & (vector_azar > ktrain_subsampling )),  ]  
+
+for(variable_ahora in variables_co){
+  tryCatch({
+    ggplot(dataset_subs, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
+      geom_boxplot() +
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
+      labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/Todosconoutliers_yespres/",variable_ahora,"_histogram_per_month_conoutliers_10percent.pdf"), width = 1366/72, height = 768/72, dpi = 72)
+    
   }, error=function(e){print(variable_ahora)})
 }
