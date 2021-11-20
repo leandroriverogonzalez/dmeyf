@@ -199,7 +199,17 @@ Rango  <- function( dataset, cols )
   
   ReportarCampos( dataset )
 }
-palancas$range  <- TRUE  (va 1ero)
+palancas$range  <- TRUE  #(va 1ero)
 if( palancas$range)  Rango( dataset, cols_analiticas)
 
-  
+######################################
+install.packages("data.table")
+library(data.table)
+colnames(dataset)
+
+data_comp <- copy(dataset[,c('numero_de_cliente','foto_mes','clase_ternaria')])
+
+object.size(data_comp)
+
+# Write CSV
+fwrite(data_comp, "/home/leandroriverogonzalez/dmeyf/estudio_datos/datos_comp.csv")
