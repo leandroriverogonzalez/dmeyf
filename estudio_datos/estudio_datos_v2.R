@@ -216,3 +216,24 @@ fwrite(data_comp, "/home/leandroriverogonzalez/dmeyf/estudio_datos/datos_comp.cs
 
 
 write.csv(data_comp, file=gzfile("/home/leandroriverogonzalez/dmeyf/estudio_datos/datos_comp.csv.gz"))
+
+
+
+
+###########################################
+
+dataset_copy <- copy(dataset)
+cols <- colnames(dataset_copy)
+cols <- cols[4:length(cols)-1]
+cols_rank <- paste0( cols, "_rango")
+cols_nrank <- paste0( cols, "_nrango")
+dataset_copy <- dataset_copy[ , paste0( cols, "_rango") := lapply( .SD, frankv, na.last="keep", ties.method="dense" ), 
+                              by= foto_mes,
+                              .SDcols= cols]
+dataset_copy[, paste0( cols, "_nrango") := lapply(.SD, function(x){(x - min(x)) / (max(x) - min(x))}), .SDcols = cols_rank]
+for(colname in cols){
+  dataset_copy[, eval(colname):=NULL]
+}
+for(colname in cols_rank){
+  dataset_copy[, eval(colname):=NULL]
+}
