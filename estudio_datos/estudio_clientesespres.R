@@ -179,3 +179,33 @@ for(variable_ahora in variables_co){
     
   }, error=function(e){print(variable_ahora)})
 }
+
+
+
+########
+# Estudio la tendencia de los que no son espres
+library(BBmisc)
+
+data_sespres <- copy(dataset_cfb2cont[dataset_cfb2cont$numero_de_cliente %notin% clientes_espres,])
+foto_meses <- sort(unique(data_b2$foto_mes))
+
+
+
+
+# data_mesbaja[data_mesbaja$numero_de_cliente==6255924,c('foto_mes','clase_ternaria')]
+
+mes_min <- 5
+for(i in mes_min:30){
+  data_mesbaja <- copy(data_sespres[data_sespres$numero_de_cliente %in% (data_sespres[(data_sespres$foto_mes==foto_meses[i]) & (data_sespres$clase_ternaria=='BAJA+2'),]$numero_de_cliente),])
+  print('primer paso')
+  testeo <- dcast(data_mesbaja[,c('Master_msaldototal','numero_de_cliente','foto_mes')], foto_mes ~ numero_de_cliente, value.var = "Master_msaldototal")
+  fotos_estos <- copy(testeo$foto_mes)
+  testeo2 <- normalize(testeo, method = "range", range = c(0, 1), margin = 1L, on.constant = "quiet")
+  testeo2$foto_mes <- fotos_estos
+  if(i==1){
+    plot(as.factor(fotos_estos)[1:i],rowMeans(testeo2[,-c(1)], na.rm = TRUE)[1:i],type='l')
+  }else{
+    lines(as.factor(fotos_estos)[1:i],rowMeans(testeo2[,-c(1)], na.rm = TRUE)[1:i])
+  }
+  print(i)
+}
