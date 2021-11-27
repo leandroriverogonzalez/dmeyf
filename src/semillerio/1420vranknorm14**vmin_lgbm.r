@@ -52,7 +52,7 @@ setwd( directory.root )
 kexperimento  <- NA #si se corre la primera vez, un valor concreto si es para continuar procesando
 
 kscript       <- "1420vranknorm14**vmin_lgbm"
-
+#E1019_1420vranknorm14**vmin_lgbm_BOlog.txt
 karchivo_dataset   <-  "./datasets/dataset_epic_vranknorm14**_leandro.csv.gz"
 
 kfecha_cutoff  <- 201911
