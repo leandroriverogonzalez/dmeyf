@@ -95,7 +95,7 @@ for(variable_ahora in campos_buenos){
   tryCatch({
     ggplot(dataset_f, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=as.factor(cluster2))) + #ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
       geom_boxplot() +
-      scale_x_discrete(guide = guide_axis(angle = 90)) #+
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
       labs(x = "Fecha", y = paste(variable_ahora))
       ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/clustersrf/",variable_ahora,"_histogram_per_month.pdf"))
   }, error=function(e){print(variable_ahora)})
