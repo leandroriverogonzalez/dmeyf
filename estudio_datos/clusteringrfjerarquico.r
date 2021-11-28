@@ -18,6 +18,8 @@ setwd( directory.root )
 dataset  <- fread( "/home/leandroriverogonzalez/buckets/b1/datasetsOri/paquete_premium.csv.gz", stringsAsFactors= TRUE)
 gc()
 
+dataset_completo <- copy(dataset)
+
 #achico el dataset
 dataset[  ,  azar := runif( nrow(dataset) ) ]
 dataset  <-  dataset[  clase_ternaria =="BAJA+1"  & foto_mes>=202001  & foto_mes<=202011, ]
@@ -99,4 +101,27 @@ for(variable_ahora in campos_buenos){
       labs(x = "Fecha", y = paste(variable_ahora))
       ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/clustersrf/",variable_ahora,"_histogram_per_month.pdf"))
   }, error=function(e){print(variable_ahora)})
+}
+
+
+###########################################################
+
+dataset_baja2 <- copy(dataset_completo[dataset_completo$clase_ternaria=='BAJA+2',])
+
+clientes_b2 <- unique(dataset_baja2$numero_de_cliente)
+
+dataset_ncb2 <- copy(dataset_completo[dataset_completo$numero_de_cliente %in% clientes_b2,])
+
+algo <- dcast(dataset_ncb2, rowid(numero_de_cliente) ~ numero_de_cliente, value.var = "clase_ternaria")
+
+algo <- dcast(dataset_ncb2, as.factor(foto_mes) ~ numero_de_cliente, value.var = "clase_ternaria")
+
+dim(algo[2,]=='BAJA+2')
+meses <- unique(dataset_ncb2$foto_mes)
+algo2 <- algo[,algo[1,]=='BAJA+2']
+for(j in seq(1,length(meses))){
+  print(j)
+  
+  data_este <- copy(dataset_ncb2[(dataset_ncb2$foto_mes==meses[j]) & (dataset_ncb2$clase_ternaria=='BAJA+2'),])
+  print(dim(data_este[data_este$foto_mes>meses[j],]))
 }
