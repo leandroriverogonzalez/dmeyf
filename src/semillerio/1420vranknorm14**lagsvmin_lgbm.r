@@ -49,11 +49,11 @@ switch ( Sys.info()[['sysname']],
 setwd( directory.root )
 
 
-kexperimento  <- NA #si se corre la primera vez, un valor concreto si es para continuar procesando
+kexperimento  <- 1026 #si se corre la primera vez, un valor concreto si es para continuar procesando
 
 kscript       <- "1420vranknorm14**lagsvmin_lgbm"
-#E1019_1420vranknorm14**vmin_lgbm_BOlog.txt
 karchivo_dataset   <-  "./datasets/dataset_epic_vranknorm14**lags_leandro.csv.gz"
+#E1026_1420vranknorm14**lagsvmin_lgbm_BOlog.txt
 
 kfecha_cutoff  <- 201911
 ktrain_desde   <- 201911
