@@ -237,3 +237,22 @@ for(colname in cols){
 for(colname in cols_rank){
   dataset_copy[, eval(colname):=NULL]
 }
+
+
+
+###########################################
+
+variables <- colnames(dataset)
+
+
+for(variable_ahora in variables_co){
+  tryCatch({
+    ggplot(dataset_subs, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
+      geom_boxplot() +
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
+      labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/baja1y2/",variable_ahora,"_histogram_per_month.pdf"), width = 1366/72, height = 768/72, dpi = 72)
+    
+  }, error=function(e){print(variable_ahora)})
+}
+
