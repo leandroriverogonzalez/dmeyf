@@ -118,7 +118,25 @@ for(variable_ahora in campos_buenos){
   }, error=function(e){print(variable_ahora)})
 }
 
+campos <- c("cpayroll_trx",
+   "mcuentas_saldo", "mrentabilidad_annual", "mprestamos_personales", "mpayroll",
+   "Visa_msaldototal", "mcomisiones_mantenimiento",
+   "mtransferencias_recibidas", "cliente_antiguedad", "cproductos", "mcomisiones_otras",
+   "mcomisiones")
 
+
+dataset  <-  dataset[ foto_mes==202011, campos, with=FALSE ]
+dataset[, paste0( campos, "_nrango") := lapply(.SD, function(x){(x - min(x)) / (max(x) - min(x))}), .SDcols = campos]
+for(colname in campos){
+  dataset[, eval(colname):=NULL]
+}  
+library(fmsb)
+radarchart(dataset[,paste0( campos, "_nrango")[9:12], with=FALSE ])
+
+radarchart(dataset[,paste0( campos, "_nrango")[9:12], with=FALSE ],
+           cglty = 1, cglcol = "gray",
+           pcol = 4, plwd = 2,
+           pfcol = rgb(0, 0.4, 1, 0.25))
 
 #quito los nulos para que se pueda ejecutar randomForest,  Dios que algoritmo prehistorico ...
 dataset  <- na.roughfix( dataset )
