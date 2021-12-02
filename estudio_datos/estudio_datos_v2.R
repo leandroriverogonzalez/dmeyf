@@ -242,17 +242,188 @@ for(colname in cols_rank){
 
 ###########################################
 
-variables <- colnames(dataset)
+variables <- colnames(dataset)[3:length(colnames(dataset))-1]
+
+variable_ahora <- variables[3]
 
 
-for(variable_ahora in variables_co){
+
+
+
+
+for(variable_ahora in variables){
   tryCatch({
-    ggplot(dataset_subs, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
-      geom_boxplot() +
-      scale_x_discrete(guide = guide_axis(angle = 90)) +
-      labs(x = "Fecha", y = paste(variable_ahora))
+    if((max(dataset[,eval(as.symbol(variable_ahora))]) - min(dataset[,eval(as.symbol(variable_ahora))])) < 5 ){
+      ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
+        geom_boxplot() +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+    }else{
+      q = c(.25, .5, .75)
+      evaluo <- dataset %>%
+        group_by(foto_mes) %>%
+        summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                  quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                  quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+      ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        geom_boxplot(outlier.shape=NA) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+    }
     ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/baja1y2/",variable_ahora,"_histogram_per_month.pdf"), width = 1366/72, height = 768/72, dpi = 72)
     
   }, error=function(e){print(variable_ahora)})
 }
+
+dataset$claseiguales <- 'todos'
+
+for(variable_ahora in variables){
+  tryCatch({
+    if((max(dataset[,eval(as.symbol(variable_ahora))]) - min(dataset[,eval(as.symbol(variable_ahora))])) < 10 ){
+      ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=claseiguales)) + 
+        geom_boxplot() +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+    }else{
+      q = c(.25, .5, .75)
+      evaluo <- dataset %>%
+        group_by(foto_mes) %>%
+        summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                  quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                  quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+      ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=claseiguales)) + ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        geom_boxplot(outlier.shape=NA) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+    }
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/todas/",variable_ahora,"_histogram_per_month.pdf"), width = 1366/72, height = 768/72, dpi = 72)
+    
+    
+  }, error=function(e){print(variable_ahora)})
+  print(variable_ahora)
+}
+
+
+
+
+for(variable_ahora in variables){
+  tryCatch({
+    if((max(dataset[,eval(as.symbol(variable_ahora))]) - min(dataset[,eval(as.symbol(variable_ahora))])) < 5 ){
+      ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
+        geom_boxplot() +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+    }else{
+      q = c(.25, .5, .75)
+      evaluo <- dataset %>%
+        group_by(foto_mes) %>%
+        summarize(quant25 = quantile(eval(as.symbol(variable_ahora)), probs = q[1]), 
+                  quant50 = quantile(eval(as.symbol(variable_ahora)), probs = q[2]),
+                  quant75 = quantile(eval(as.symbol(variable_ahora)), probs = q[3]))
+      ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + ylim(min(evaluo$quant25) - (max(evaluo$quant75) - min(evaluo$quant25))/10, max(evaluo$quant75) + (max(evaluo$quant75) - min(evaluo$quant25))/10) +
+        geom_boxplot(outlier.shape=NA) +
+        scale_x_discrete(guide = guide_axis(angle = 90)) +
+        labs(x = "Fecha", y = paste(variable_ahora))
+    }
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/baja1y2/",variable_ahora,"_histogram_per_month.pdf"), width = 1366/72, height = 768/72, dpi = 72)
+    
+  }, error=function(e){print(variable_ahora)})
+}
+
+
+
+ggplot(dataset, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
+  geom_boxplot() +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  labs(x = "Fecha", y = paste(variable_ahora))
+
+
+
+
+
+clases_compli <- c("mprestamos_hipotecarios",
+"mtarjeta_visa_descuentos",
+"mtarjeta_master_descuentos",
+"tmobile_app",
+"cmobile_app_trx",
+"Master_delinquency",
+"Master_status",
+"Master_mfinanciacion_limite",
+"Master_Fvencimiento",
+"Master_Finiciomora",
+"Master_msaldototal",
+"Master_msaldopesos",
+"Master_msaldodolares",
+"Master_mconsumospesos",
+"Master_mconsumosdolares",
+"Master_mlimitecompra",
+"Master_madelantopesos",
+"Master_madelantodolares",
+"Master_fultimo_cierre",
+"Master_mpagado",
+"Master_mpagospesos",
+"Master_mpagosdolares",
+"Master_fechaalta",
+"Master_mconsumototal",
+"Master_cconsumos",
+"Master_cadelantosefectivo",
+"Master_mpagominimo",
+"Visa_delinquency",
+"Visa_status",
+"Visa_mfinanciacion_limite",
+"Visa_Fvencimiento",
+"Visa_Finiciomora",
+"Visa_msaldototal",
+"Visa_msaldopesos",
+"Visa_msaldodolares",
+"Visa_mconsumospesos",
+"Visa_mconsumosdolares",
+"Visa_mlimitecompra",
+"Visa_madelantopesos",
+"Visa_madelantodolares",
+"Visa_fultimo_cierre",
+"Visa_mpagado",
+"Visa_mpagospesos",
+"Visa_mpagosdolares",
+"Visa_fechaalta",
+"Visa_mconsumototal",
+"Visa_cconsumos",
+"Visa_cadelantosefectivo",
+"Visa_mpagominimo")
+
+
+poscontinua <- which(dataset$clase_ternaria=='CONTINUA')
+
+datasubcont <- copy(dataset[-sample(poscontinua)[1:ceiling(length(poscontinua)*.9)],])
+dim(datasubcont)
+for(variable_ahora in clases_compli){
+  tryCatch({
+    ggplot(datasubcont, aes(x=as.factor(foto_mes), y=eval(as.symbol(variable_ahora)), fill=clase_ternaria)) + 
+      geom_boxplot() +
+      scale_x_discrete(guide = guide_axis(angle = 90)) +
+      labs(x = "Fecha", y = paste(variable_ahora))
+    ggsave(paste0("/home/leandroriverogonzalez/dmeyf/estudio_datos/baja1y2dificiles/",variable_ahora,"_histogram_per_month.pdf"), width = 1366/72, height = 768/72, dpi = 72)
+    
+  }, error=function(e){print(variable_ahora)})
+}
+
+
+#####
+#Evaluamos la proporcion de baja mas 2 por fecha
+
+dataset[, sum := .N, by = foto_mes][, prop := .N, by = c("foto_mes", "clase_ternaria")][, prop := prop/sum][, sum := NULL]
+
+dataset$prop
+
+
+prop_calse_mes <- dataset %>%
+  group_by(foto_mes, clase_ternaria) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+
+ggplot(prop_calse_mes[prop_calse_mes$clase_ternaria=='BAJA+2',], aes(x=as.factor(foto_mes), y=100*freq)) + geom_point() +
+  scale_x_discrete(guide = guide_axis(angle = 30)) +
+  labs(x = "año mes", y = 'Baja+2 [%]')
+
+#clientes unicos
 
