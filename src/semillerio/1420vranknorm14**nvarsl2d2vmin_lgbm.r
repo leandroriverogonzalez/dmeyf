@@ -49,18 +49,18 @@ switch ( Sys.info()[['sysname']],
 setwd( directory.root )
 
 
-kexperimento  <- 1025 #si se corre la primera vez, un valor concreto si es para continuar procesando
+kexperimento  <- NA #si se corre la primera vez, un valor concreto si es para continuar procesando
 
-kscript       <- "1420vranknorm14**lags2_lgbm"
-karchivo_dataset   <-  "./datasets/dataset_epic_vranknorm14**lags2_leandro.csv.gz"
-#E1025_1420vranknorm14**lags2_lgbm_BOlog.txt
+kscript       <- "1420vranknorm14**nvarsl2d2vmin_lgbm"
+# dataset_epic_vranknorm14**nvarsl2d2vmin_leandro.csv.gz
+karchivo_dataset   <-  "./datasets/dataset_epic_vranknorm14**nvarsl2d2vmin_leandro.csv.gz"
 
 kfecha_cutoff  <- 201911
 ktrain_desde   <- 201911
 ktrain_hasta   <- 202009
 
 
-kBO_iter    <-  180   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  120   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 kcantidad_semillas  <- 10
 
