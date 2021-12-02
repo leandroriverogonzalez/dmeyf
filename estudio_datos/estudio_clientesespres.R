@@ -386,7 +386,7 @@ dfmcom <- data.frame(seq(15,1), mcom15a1)
 
 colnames(dfmcom) <- c('Baja', 'Monto_comisiones')
 
-ggplot(dfmpp, aes(x=Baja, y=Monto_prendario)) + geom_point() + scale_x_continuous(trans='reverse') +
+ggplot(dfmcom, aes(x=Baja, y=Monto_comisiones)) + geom_point() + scale_x_continuous(trans='reverse') +
   labs(x = 'Baja', y = 'Monto comisiones [%]')
 
 
